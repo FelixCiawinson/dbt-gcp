@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+{#         
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -34,7 +34,7 @@ jobs:
 
       - name: Generate dbt docs
         run: |
-          dbt docs generate
+          dbt docs generate #}
           
       - name: Run a one-line script
         run: echo Github Actions Test
