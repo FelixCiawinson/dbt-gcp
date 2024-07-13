@@ -1,0 +1,40 @@
+name: Deploy dbt
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dbt
+        run: |
+          pip install dbt-core==1.8.3
+          pip install dbt-bigquery==1.8.2
+
+      - name: Run dbt
+        run: |
+          dbt --version
+          dbt deps
+          dbt compile
+
+      - name: Generate dbt docs
+        run: |
+          dbt docs generate
+          
+      - name: Run a one-line script
+        run: echo Github Actions Test
